@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public Animation anim;
     string hurryup = "Hurryup";
     public AudioSource Hurry;
+    public AudioSource BGM;
     public Text Stnum;
     public float LimitTime;
     public Text text_Timer;
@@ -18,9 +19,12 @@ public class GameManager : MonoBehaviour
     public Image GO, TO, SC;
     public bool isClear;
 
+    private bool IsHurried = false;
+
     void Start()
     {
         Stnum.text = "Stage 1";
+        BGM.Play();
         
     }
 
@@ -43,12 +47,20 @@ public class GameManager : MonoBehaviour
             text_Timer.text = "남은 시간 : " + Mathf.Round(LimitTime);
             if (LimitTime <= 10)
             {
-                Debug.Log("hurryup");
-                HurryUp();
+                if (IsHurried == false)
+                {
+                    IsHurried = true;
+                    
+                    Debug.Log("hurryup");
+                    HurryUp();
+                }
+                
                 if (LimitTime <= 0)
                 {
                     text_Timer.text = "남은 시간 : 0";
                     Timeover();
+                    BGM.Stop();
+
 
                 }
             }
@@ -66,6 +78,7 @@ public class GameManager : MonoBehaviour
         Retry.gameObject.SetActive(true);
         Main.gameObject.SetActive(true);
 
+
     }
     public void Gameover()
     {
@@ -82,6 +95,7 @@ public class GameManager : MonoBehaviour
         Next.gameObject.SetActive(true);
         Main.gameObject.SetActive(true);
         Retry.gameObject.SetActive(true);
+        BGM.Stop();
     }
     public void NextStage1()
     {
@@ -91,15 +105,20 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene("Park Stage3");
     }
-   
+    public void NextStage3()
+    {
+        SceneManager.LoadScene("Park Stage4");
+    }
+    public void NextStage4()
+    {
+        SceneManager.LoadScene("Park Stage4");
+    }
     public void Back()
     {
         SceneManager.LoadScene("Parking Main");
     }
     public void HurryUp()
     {
-
-        Hurry = gameObject.AddComponent<AudioSource>();
         Hurry.Play();
         Debug.Log("hurryup?");
         anim.Play();

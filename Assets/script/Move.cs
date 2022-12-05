@@ -7,6 +7,8 @@ public class Move : MonoBehaviour
 {
     bool LeftStop;
     bool RightStop;
+    bool UpStop;
+    bool DownStop;
     RaycastHit hitLayerMask;
     
 
@@ -65,8 +67,30 @@ public class Move : MonoBehaviour
                     float z = this.transform.position.z;
                     this.transform.position = new Vector3(hitLayerMask.point.x, y, z);
                 }
+            }
+            else if (UpStop == true)
+            {
+             
+                
+                
+                   float x = this.transform.position.x;
+                    float z = this.transform.position.z;
+                    this.transform.position = new Vector3(x, hitLayerMask.point.y, z);
                 
 
+            }
+            else if (DownStop == true)
+            {
+                
+                
+
+                    Debug.Log($"transform : {transform.position.y}      hitLayerMask : {hitLayerMask.point.y}    result : {transform.position.y - hitLayerMask.point.y}");
+                    float x = this.transform.position.x;
+                    float z = this.transform.position.z;
+
+                    this.transform.position = new Vector3(x, transform.position.y, z);
+                
+                
             }
             else
             { //Debug.Log("OnMouseDrag");
@@ -81,6 +105,7 @@ public class Move : MonoBehaviour
     {
         CarMove carMove = collision.gameObject.GetComponent<CarMove>();
         Wall wall = collision.gameObject.GetComponent<Wall>();
+        Move move = collision.gameObject.GetComponent<Move>();
         if (carMove || wall)
         {
             Debug.Log("面倒");
@@ -100,12 +125,27 @@ public class Move : MonoBehaviour
             }
 
         }
+        if (move || wall)
+        {
+            if (gameObject.transform.position.y <= collision.transform.position.y)
+            {
+                Debug.Log("困率 面倒");
+                UpStop = true;
+            }
+            if (gameObject.transform.position.y >= collision.transform.position.y)
+            {
+                Debug.Log("酒贰率 面倒");
+                DownStop = true;
+            }
+
+        }
 
     }
     private void OnCollisionExit(Collision collision)
     {
         CarMove carMove = collision.gameObject.GetComponent<CarMove>();
         Wall wall = collision.gameObject.GetComponent<Wall>();
+        Move move = collision.gameObject.GetComponent<Move>();
         if (carMove || wall)
         {
             if (gameObject.transform.position.x > collision.transform.position.x)
@@ -117,6 +157,19 @@ public class Move : MonoBehaviour
             {
                 Debug.Log("坷弗率 面倒 场");
                 RightStop = false;
+            }
+        }
+        if (move || wall)
+        {
+            if (gameObject.transform.position.y <= collision.transform.position.y)
+            {
+                Debug.Log("困率 面倒 场");
+                UpStop = false;
+            }
+            if (gameObject.transform.position.y >= collision.transform.position.y)
+            {
+                Debug.Log("酒贰率 面倒 场");
+                DownStop = false;
             }
         }
     }

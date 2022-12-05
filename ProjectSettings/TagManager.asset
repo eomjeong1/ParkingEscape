@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Cars
   - Exit
+  - Walls
   layers:
   - Default
   - TransparentFX

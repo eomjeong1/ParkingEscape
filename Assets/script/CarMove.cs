@@ -6,8 +6,10 @@ public class CarMove : MonoBehaviour
 {
     bool UpStop;
     bool DownStop;
+    bool LeftStop;
+    bool RightStop;
     RaycastHit hitLayerMask;
-    
+
 
 
     private void OnMouseDrag()
@@ -19,12 +21,37 @@ public class CarMove : MonoBehaviour
         int layerMask = 1 << LayerMask.NameToLayer("Stage");
         if (Physics.Raycast(ray, out hitLayerMask, Mathf.Infinity, layerMask))
         {
+            if (LeftStop == true)
+            {
+              
+                    
+                        Debug.Log($"transform : {transform.position.x}      hitLayerMask : {hitLayerMask.point.x}    result : {transform.position.x - hitLayerMask.point.x}");
+                        float y = this.transform.position.y;
+                        float z = this.transform.position.z;
+
+                        this.transform.position = new Vector3(transform.position.x, y, z);
+                    
+              
+
+            }
+            else if (RightStop == true)
+            {
+                
+
+
+                    Debug.Log($"transform : {transform.position.x}      hitLayerMask : {hitLayerMask.point.x}    result : {transform.position.x - hitLayerMask.point.x}");
+                    float y = this.transform.position.y;
+                    float z = this.transform.position.z;
+
+                    this.transform.position = new Vector3(transform.position.x, y, z);
+                
+            }
             if (UpStop == true)
             {
                 if (this.transform.position.y <= hitLayerMask.point.y)
                 {
 
-                    
+
                     Debug.Log($"transform : {transform.position.y}      hitLayerMask : {hitLayerMask.point.y}    result : {transform.position.y - hitLayerMask.point.y}");
                     float x = this.transform.position.x;
                     float z = this.transform.position.z;
@@ -35,7 +62,7 @@ public class CarMove : MonoBehaviour
                 {
                     float x = this.transform.position.x;
                     float z = this.transform.position.z;
-                    this.transform.position = new Vector3(x, hitLayerMask.point.y ,z);
+                    this.transform.position = new Vector3(x, hitLayerMask.point.y, z);
                 }
 
             }
@@ -70,9 +97,7 @@ public class CarMove : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Move move = collision.gameObject.GetComponent<Move>();
-        Wall wall = collision.gameObject.GetComponent<Wall>();
-        if (move || wall)
+        if (collision.transform.tag == "Cars" || collision.transform.tag == "Walls")
         {
             Debug.Log("충돌");
             // 플레이어 위치값, 콜리전 위치값 출력
@@ -89,15 +114,23 @@ public class CarMove : MonoBehaviour
                 Debug.Log("아래쪽 충돌");
                 DownStop = true;
             }
+            if (gameObject.transform.position.x >= collision.transform.position.x)
+            {
+                Debug.Log("왼쪽 충돌");
+                LeftStop = true;
+            }
+            if (gameObject.transform.position.x <= collision.transform.position.x)
+            {
+                Debug.Log("오른쪽 충돌");
+                RightStop = true;
+            }
 
         }
-
     }
     private void OnCollisionExit(Collision collision)
     {
-        Move move = collision.gameObject.GetComponent<Move>();
-        Wall wall = collision.gameObject.GetComponent<Wall>();
-        if (move || wall)
+
+        if (collision.transform.tag == "Cars" || collision.transform.tag == "Walls")
         {
             if (gameObject.transform.position.y <= collision.transform.position.y)
             {
@@ -109,7 +142,18 @@ public class CarMove : MonoBehaviour
                 Debug.Log("아래쪽 충돌 끝");
                 DownStop = false;
             }
+            if (gameObject.transform.position.x > collision.transform.position.x)
+            {
+                Debug.Log("왼쪽 충돌 끝");
+                LeftStop = false;
+            }
+            if (gameObject.transform.position.x < collision.transform.position.x)
+            {
+                Debug.Log("오른쪽 충돌 끝");
+                RightStop = false;
+            }
         }
+
     }
 
 }
