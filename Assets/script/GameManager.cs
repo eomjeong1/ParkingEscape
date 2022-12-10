@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using JetBrains.Annotations;
 
 public class GameManager : MonoBehaviour
 {
     public Animation anim;
-    string hurryup = "Hurryup";
+    
     public AudioSource Hurry;
     public AudioSource BGM;
     public Text Stnum;

@@ -13,8 +13,14 @@ EditorBuildSettings:
     guid: 9ca17c2949b71c040bdd9a9486ab01ef
   - enabled: 1
     path: Assets/Scenes/Park Stage2.unity
-    guid: a25ae2d74878c8b4bacd01ae7567cb8a
+    guid: 00ea84ece0f387a47bedfaed453d928f
   - enabled: 1
     path: Assets/Scenes/Park Stage3.unity
-    guid: 8ce8f28c2a19af140bc1f84cf4376db3
+    guid: f06ee615f2051e34ea153d48601f2154
+  - enabled: 1
+    path: Assets/Scenes/Park Stage4.unity
+    guid: f81c798e3e9b9e344a6f99565baf7990
+  - enabled: 1
+    path: Assets/Scenes/Park Stage5.unity
+    guid: 1e92a6154a3430a44b915e598b761649
   m_configObjects: {}
